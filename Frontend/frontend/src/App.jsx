@@ -65,15 +65,7 @@ function App() {
         
       </Routes>
 
-      <ToastContainer
-        position="top-center"
-        autoClose={3000}
-        hideProgressBar={false}
-        closeOnClick
-        pauseOnHover
-        draggable
-        theme="colored"
-      />
+   
     </>
   );
 }

@@ -14,10 +14,21 @@ const Layout = () => {
   return ( 
     <div className="layout-wrapper">
       {!isVendorPage && <Navbar />}
+
       
       <main className="layout-content pt-24">
         <Outlet />
-        <ToastContainer />
+
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        closeOnClick
+        pauseOnHover
+        draggable
+        theme="colored"
+      />
+        {/* <ToastContainer /> */}
       </main>
       
       {!isVendorPage && <Footer />}

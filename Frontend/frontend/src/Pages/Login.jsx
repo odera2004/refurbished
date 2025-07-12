@@ -15,15 +15,15 @@ export default function Login() {
     const success = await login(email, password);
     if (success) {
       toast.success("✅ Successfully logged in");
-
-      // Check if vendor
+    
       const user = JSON.parse(localStorage.getItem('user'));
-      if (user?.is_vendor) {
+      if (user?.role === 'vendor') {
         navigate('/vendor-dashboard');
       } else {
         navigate('/');
       }
     }
+    
   };
 
   return (

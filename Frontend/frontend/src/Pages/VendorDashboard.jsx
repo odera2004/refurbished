@@ -41,9 +41,10 @@ export default function VendorDashboard() {
   }, [user]);
 
   useEffect(() => {
-    if (!loading && (!user || !user.is_vendor)) {
-      navigate('/register');
+    if (!loading && (!user || user.role !== 'vendor')) {
+      navigate('/');
     }
+    
   }, [loading, user, navigate]);
 
   const handleProfileUpdated = () => {
@@ -58,6 +59,13 @@ export default function VendorDashboard() {
   };
 
   if (loading) return <div className="text-center my-5">Loading dashboard...</div>;
+  if (!profile) return (
+    <div className="text-center my-10">
+      <p className="text-lg text-red-500 mb-4">Vendor profile not found!</p>
+      <VendorProfileForm userId={user.id} onProfileUpdated={handleProfileUpdated} />
+    </div>
+  );
+  
 
   const isProfileComplete = profile && profile.store_name;
 

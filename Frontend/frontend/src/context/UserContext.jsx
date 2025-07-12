@@ -25,19 +25,8 @@ export function UserProvider({ children }) {
         setUser(data.user);
         localStorage.setItem('user', JSON.stringify(data.user));
         localStorage.setItem('token', data.access_token);
-      
-        // Redirect based on role
-        if (data.user.is_vendor) {
-          window.location.href = '/vendor-dashboard';
-        } else {
-          window.location.href = '/';
-        }
-      
         return true;
-      }      
-      
-      
-       else {
+      } else {
         alert(data.message || 'Login failed');
         return false;
       }
@@ -46,8 +35,9 @@ export function UserProvider({ children }) {
       return false;
     }
   };
+  
 
-  const register = async (full_name, email, phone, password, role, campus) => {
+  const register = async (full_name, email, phone_number, password, role, campus) => {
     try {
       const response = await fetch('http://localhost:5000/register', {
         method: 'POST',
@@ -55,7 +45,7 @@ export function UserProvider({ children }) {
         body: JSON.stringify({
           full_name,
           email,
-          phone,
+          phone_number,
           password,
           role,
           campus,
@@ -66,18 +56,18 @@ export function UserProvider({ children }) {
   
       if (response.ok) {
         // ✅ Automatically create VendorProfile if role is vendor
-        if (role === 'vendor') {
-          await fetch('http://localhost:5000/vendor-profiles', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              user_id: data.user_id, // You must return `user_id` from /register
-              store_name: full_name + "'s Shop", // default store name
-              bio: '',
-              subscription_status: 'free'
-            }),
-          });
-        }
+        // if (role === 'vendor') {
+        //   await fetch('http://localhost:5000/vendor-profiles', {
+        //     method: 'POST',
+        //     headers: { 'Content-Type': 'application/json' },
+        //     body: JSON.stringify({
+        //       user_id: data.user_id, // You must return `user_id` from /register
+        //       store_name: full_name + "'s Shop", // default store name
+        //       bio: '',
+        //       subscription_status: 'free'
+        //     }),
+        //   });
+        // }
   
         return true;
       } else {
