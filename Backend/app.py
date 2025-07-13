@@ -11,7 +11,7 @@ app = Flask(__name__, static_folder='static', static_url_path='/static')
 CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})
 
 # ✅ Set your DB name
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///lost.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://soko_aa2l_user:ug4dyPk45E6iOtSEkpvm40PwaUNdh4kb@dpg-d1pp3ojuibrs73e054j0-a.oregon-postgres.render.com/soko_aa2l'
 
 # ✅ JWT Config
 app.config["JWT_SECRET_KEY"] = "vghsdvvsjvy436u4wu37118gcd#"  # Replace with env variable in production
@@ -22,12 +22,12 @@ db.init_app(app)
 migrate = Migrate(app, db)
 jwt = JWTManager(app)
 
-# from views import *
+from views import *
 
-# app.register_blueprint(user_bp)
-# app.register_blueprint(listings_bp)
-# app.register_blueprint(vendor_profiles_bp)
-# app.register_blueprint(auth_bp)
+app.register_blueprint(user_bp)
+app.register_blueprint(listings_bp)
+app.register_blueprint(vendor_profiles_bp)
+app.register_blueprint(auth_bp)
 
 
 @jwt.token_in_blocklist_loader
