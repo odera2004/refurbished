@@ -1,9 +1,9 @@
 from flask import Blueprint, request, jsonify
-from models import db
-from models import Listing
+from models import db, Listing
+import cloudinary.uploader
+import os
 
 listings_bp = Blueprint('listings_bp', __name__)
-
 
 # GET all listings or by vendor_id
 @listings_bp.route('/listings', methods=['GET'])
@@ -23,26 +23,30 @@ def get_listing(id):
     return jsonify(listing.to_dict())
 
 
-# CREATE listing
+# CREATE listing with Cloudinary image upload
 @listings_bp.route('/listings', methods=['POST'])
 def create_listing():
     try:
         title = request.form.get('title')
         description = request.form.get('description')
-        price = request.form.get('price')
+        price = int(request.form.get('price'))
         condition = request.form.get('condition')
         category = request.form.get('category')
-        vendor_id = request.form.get('user_id')
+        vendor_id = int(request.form.get('user_id'))
         vendor_name = request.form.get('vendor_name')
         vendor_whatsapp = request.form.get('vendor_whatsapp')
         image_file = request.files.get('image')
 
         image_url = None
         if image_file:
-            filename = image_file.filename
-            filepath = f"static/uploads/{filename}"
-            image_file.save(filepath)
-            image_url = f"/{filepath}"
+            upload_result = cloudinary.uploader.upload(
+                image_file,
+                folder="product_images",  # optional Cloudinary folder
+                use_filename=True,
+                unique_filename=True,
+                resource_type="image"
+            )
+            image_url = upload_result.get("secure_url")
 
         listing = Listing(
             title=title,
@@ -63,6 +67,8 @@ def create_listing():
 
     except Exception as e:
         db.session.rollback()
+        import traceback
+        traceback.print_exc()
         return jsonify({ "error": str(e) }), 500
 
 
@@ -94,7 +100,7 @@ def update_listing(id):
         listing.category = data.get('category', listing.category)
         listing.vendor_name = data.get('vendor_name', listing.vendor_name)
         listing.vendor_whatsapp = data.get('vendor_whatsapp', listing.vendor_whatsapp)
-        
+
         db.session.commit()
         return jsonify({"message": "Listing updated", "listing": listing.to_dict()})
     except Exception as e:
