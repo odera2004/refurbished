@@ -15,7 +15,7 @@ export function UserProvider({ children }) {
 
   const login = async (email, password) => {
     try {
-      const response = await fetch('http://localhost:5000/login', {
+      const response = await fetch('https://refurbished-3.onrender.com/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -39,7 +39,7 @@ export function UserProvider({ children }) {
 
   const register = async (full_name, email, phone_number, password, role, campus) => {
     try {
-      const response = await fetch('http://localhost:5000/register', {
+      const response = await fetch('https://refurbished-3.onrender.com/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -57,7 +57,7 @@ export function UserProvider({ children }) {
       if (response.ok) {
         // ✅ Automatically create VendorProfile if role is vendor
         // if (role === 'vendor') {
-        //   await fetch('http://localhost:5000/vendor-profiles', {
+        //   await fetch('https://refurbished-3.onrender.com/vendor-profiles', {
         //     method: 'POST',
         //     headers: { 'Content-Type': 'application/json' },
         //     body: JSON.stringify({
@@ -87,7 +87,7 @@ export function UserProvider({ children }) {
   
     if (token) {
       try {
-        await fetch('http://localhost:5000/logout', {
+        await fetch('https://refurbished-3.onrender.com/logout', {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',

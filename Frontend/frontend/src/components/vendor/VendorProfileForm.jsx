@@ -17,7 +17,7 @@ export default function VendorProfileForm({ userId, onProfileUpdated }) {
 
     setLoading(true);
     try {
-      const response = await fetch(`http://localhost:5000/vendor-profiles/${userId}`, {
+      const response = await fetch(`https://refurbished-3.onrender.com/vendor-profiles/${userId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ store_name: storeName, bio }),

@@ -9,7 +9,7 @@ export default function ProductList({ userId }) {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/listings?vendor_id=${userId}`);
+      const response = await fetch(`https://refurbished-3.onrender.com/listings?vendor_id=${userId}`);
       const data = await response.json();
       if (response.ok) {
         setProducts(data);
@@ -24,7 +24,7 @@ export default function ProductList({ userId }) {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this product?")) return;
     try {
-      const res = await fetch(`http://localhost:5000/listings/${id}`, {
+      const res = await fetch(`https://refurbished-3.onrender.com/listings/${id}`, {
         method: 'DELETE'
       });
       if (res.ok) {
@@ -66,10 +66,10 @@ export default function ProductList({ userId }) {
             <div key={product.id} className="bg-white shadow-md rounded-xl overflow-hidden flex flex-col relative">
               {product.image_url && (
                 <img
-                  src={`http://localhost:5000/${product.image_url}`}
+                  src={product.image_url}
                   alt={product.title}
                   className="h-48 w-full object-cover cursor-pointer"
-                  onClick={() => setPreviewImage(`http://localhost:5000/${product.image_url}`)}
+                  onClick={() => setPreviewImage(product.image_url)}
                 />
               )}
               <div className="p-4 flex flex-col justify-between flex-grow">
@@ -116,7 +116,7 @@ export default function ProductList({ userId }) {
                   <button onClick={() => handleDelete(product.id)} className="text-red-600 hover:text-red-800" title="Delete">
                     <FiTrash2 size={18} />
                   </button>
-                  <button onClick={() => setPreviewImage(`http://localhost:5000/${product.image_url}`)} className="text-gray-600 hover:text-black" title="Preview">
+                  <button onClick={() => setPreviewImage(product.image_url)} className="text-gray-600 hover:text-black" title="Preview">
                     <FiZoomIn size={18} />
                   </button>
                 </div>

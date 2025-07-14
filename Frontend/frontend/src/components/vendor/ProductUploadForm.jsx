@@ -18,7 +18,6 @@ export default function ProductUploadForm({ userId, onUpload }) {
   const [previewUrl, setPreviewUrl] = useState(null);
   const [showForm, setShowForm] = useState(true);
 
-  // Auto-generate slug from title
   useEffect(() => {
     if (formData.title) {
       const slug = formData.title
@@ -29,7 +28,6 @@ export default function ProductUploadForm({ userId, onUpload }) {
     }
   }, [formData.title]);
 
-  // Handle form input
   const handleChange = (e) => {
     const { name, value, files } = e.target;
 
@@ -57,7 +55,7 @@ export default function ProductUploadForm({ userId, onUpload }) {
     payload.append('user_id', userId);
 
     try {
-      const res = await fetch('http://localhost:5000/listings', {
+      const res = await fetch('https://refurbished-3.onrender.com/listings', {
         method: 'POST',
         body: payload,
       });
