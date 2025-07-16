@@ -13,7 +13,7 @@ const clientId = 'YOUR_GOOGLE_CLIENT_ID';
 
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <GoogleOAuthProvider clientId={clientId}>
+    <GoogleOAuthProvider clientId="657664230113-v0ngcasp9gg858ehd1b4t3smio9me38l.apps.googleusercontent.com">
     <BrowserRouter>
     <UserProvider> {/* ✅ Wrap App */}
         <App />

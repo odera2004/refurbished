@@ -2,6 +2,8 @@ import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
 import { toast } from 'react-toastify';
+import GoogleLoginButton from '../components/GoogleLoginButton'; // adjust path if needed
+
 
 export default function Register() {
   const { register } = useContext(UserContext);
@@ -41,6 +43,9 @@ export default function Register() {
         </h2>
 
         <div className="my-4 text-center text-gray-500 text-sm">— OR —</div>
+
+        <GoogleLoginButton />
+
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>

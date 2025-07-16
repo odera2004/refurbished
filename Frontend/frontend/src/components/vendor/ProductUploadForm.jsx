@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 export default function ProductUploadForm({ userId, onUpload }) {
   const [formData, setFormData] = useState({
     title: '',
-    slug: '',
     description: '',
     vendor_name: '',
     vendor_whatsapp: '',
@@ -18,13 +17,14 @@ export default function ProductUploadForm({ userId, onUpload }) {
   const [previewUrl, setPreviewUrl] = useState(null);
   const [showForm, setShowForm] = useState(true);
 
+  // Auto-generate slug on title change (optional)
   useEffect(() => {
     if (formData.title) {
       const slug = formData.title
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, '-')
         .replace(/(^-|-$)+/g, '');
-      setFormData((prev) => ({ ...prev, slug }));
+      // Optionally: setFormData((prev) => ({ ...prev, slug }));
     }
   }, [formData.title]);
 
@@ -33,13 +33,13 @@ export default function ProductUploadForm({ userId, onUpload }) {
 
     if (name === 'image') {
       const file = files[0];
+      if (!file) return;
+
       setFormData((prev) => ({ ...prev, image: file }));
 
-      if (file) {
-        const reader = new FileReader();
-        reader.onloadend = () => setPreviewUrl(reader.result);
-        reader.readAsDataURL(file);
-      }
+      const reader = new FileReader();
+      reader.onloadend = () => setPreviewUrl(reader.result);
+      reader.readAsDataURL(file);
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
@@ -49,23 +49,30 @@ export default function ProductUploadForm({ userId, onUpload }) {
     e.preventDefault();
 
     const payload = new FormData();
-    for (let key in formData) {
-      payload.append(key, formData[key]);
-    }
+    payload.append('title', formData.title);
+    payload.append('description', formData.description);
+    payload.append('price', formData.price);
+    payload.append('condition', formData.condition);
+    payload.append('category', formData.category);
+    payload.append('vendor_name', formData.vendor_name);
+    payload.append('vendor_whatsapp', formData.vendor_whatsapp);
     payload.append('user_id', userId);
+    payload.append('image', formData.image); // Ensure this is a File object
+
+    console.log([...payload.entries()]);
 
     try {
       const res = await fetch('https://refurbished-3.onrender.com/listings', {
         method: 'POST',
         body: payload,
       });
+
       const data = await res.json();
 
       if (res.ok) {
         toast.success('Product uploaded successfully!');
         setFormData({
           title: '',
-          slug: '',
           description: '',
           vendor_name: '',
           vendor_whatsapp: '',
@@ -81,7 +88,7 @@ export default function ProductUploadForm({ userId, onUpload }) {
       }
     } catch (err) {
       console.error(err);
-      toast.error('Server error');
+      toast.error('Server error occurred');
     }
   };
 

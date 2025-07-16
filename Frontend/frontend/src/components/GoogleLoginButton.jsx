@@ -8,11 +8,13 @@ export default function GoogleLoginButton() {
 
   const handleSuccess = async (credentialResponse) => {
     try {
-      const res = await fetch('http://localhost:5000/google', {
+      const res = await fetch('https://refurbished-3.onrender.com/google', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include', // ✅ Include credentials (needed for cookies/tokens)
         body: JSON.stringify({ token: credentialResponse.credential }),
       });
+      
 
       if (!res.ok) {
         throw new Error('Failed to log in with Google');
