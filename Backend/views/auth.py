@@ -16,7 +16,7 @@ serializer = URLSafeTimedSerializer(os.getenv("SECRET_KEY", "fallback-secret-key
 
 # --- Login with Email/Password ---
 @auth_bp.route('/login', methods=['POST'])
-@cross_origin(origins=["https://refurbished-1.vercel.app"], supports_credentials=True)
+@cross_origin(origins=["https://sokolawanafunzi.vercel.app"], supports_credentials=True)
 def login():
 
     data = request.get_json()

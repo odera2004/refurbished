@@ -15,15 +15,16 @@ load_dotenv()
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max upload
 
-
-# Enable CORS for your frontend
-CORS(app, supports_credentials=True, origins=["http://localhost:5173", "https://refurbished-1.vercel.app"])
+# ✅ Enable CORS for local and deployed frontends
+CORS(app, supports_credentials=True, origins=[
+    "http://localhost:5173", 
+    "https://sokolawanafunzi.vercel.app"  # ✅ Your deployed frontend
+])
 
 # Load environment-based config
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
 app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
-
 
 # Initialize extensions
 from models import db, TokenBlocklist
@@ -45,8 +46,6 @@ app.register_blueprint(listings_bp)
 app.register_blueprint(vendor_profiles_bp)
 app.register_blueprint(auth_bp)
 
-# Route to serve uploaded images
-
 # JWT token blocklist check
 @jwt.token_in_blocklist_loader
 def check_if_token_revoked(jwt_header, jwt_payload: dict) -> bool:
@@ -58,4 +57,3 @@ def check_if_token_revoked(jwt_header, jwt_payload: dict) -> bool:
 @app.route("/")
 def index():
     return {"message": "Soko Backend is running 🎉"}
-
