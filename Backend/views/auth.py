@@ -16,7 +16,9 @@ serializer = URLSafeTimedSerializer(os.getenv("SECRET_KEY", "fallback-secret-key
 
 # --- Login with Email/Password ---
 @auth_bp.route('/login', methods=['POST'])
+@cross_origin(origins=["https://refurbished-1.vercel.app"], supports_credentials=True)
 def login():
+
     data = request.get_json()
 
     user = User.query.filter_by(email=data.get('email')).first()
@@ -38,56 +40,45 @@ def login():
         return jsonify({"message": "Invalid email or password"}), 401
 
 
-# --- Login with Google ---
 @auth_bp.route('/google', methods=['POST', 'OPTIONS'])
-@cross_origin(origin='http://localhost:5173', methods=['POST', 'OPTIONS'], supports_credentials=True)
+@cross_origin(origins="http://localhost:5173", supports_credentials=True)
+def google_register():
+    from models import User  # your User model
 
-def login_with_google():
     data = request.get_json()
     token = data.get('token')
 
     try:
-        # 1. Verify token with Google
         idinfo = id_token.verify_oauth2_token(
             token,
             grequests.Request(),
             os.getenv("GOOGLE_CLIENT_ID")
         )
 
-        # 2. Extract user info
-        email = idinfo['email']
-        name = idinfo.get('name') or email.split('@')[0]
+        email = idinfo.get("email")
+        name = idinfo.get("name") or email.split('@')[0]
 
-        # 3. Check if user exists
         user = User.query.filter_by(email=email).first()
 
-        # 4. Create user if not exists
         if not user:
             user = User(
-                 username=name,
-                 email=email,
-                 password=generate_password_hash(os.urandom(12).hex()),
-                 role='mentee',
-                 is_google_account=True
-                )
+                full_name=name,
+                email=email,
+                phone_number='',
+                password=generate_password_hash(os.urandom(12).hex()),
+                role='buyer',
+                campus='',
+                is_google_account=True  # Optional flag
+            )
             db.session.add(user)
             db.session.commit()
 
-        # 5. Create JWT token
-        access_token = create_access_token(identity=user.id)
-        return jsonify({
-            'access_token': access_token,
-            'user': {
-                'id': user.id,
-                'email': user.email,
-                'username': user.username,
-                'role': user.role
-            }
-        }), 200
+        return jsonify({"message": "Google registration successful"}), 200
 
     except Exception as e:
-        print("Google token verification failed:", e)
-        return jsonify({'error': 'Invalid Google token'}), 400
+        print("Google registration error:", e)
+        return jsonify({"error": "Invalid Google token"}), 400
+
 
 # --- Get Current User ---
 @auth_bp.route('/current_user', methods=['GET'])

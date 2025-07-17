@@ -13,6 +13,7 @@ class User(db.Model):
     campus = db.Column(db.String(100))
 
     vendor_profile = db.relationship('VendorProfile', backref='user', uselist=False)
+    is_google_account = db.Column(db.Boolean, default=False)
 
 class VendorProfile(db.Model):
     id = db.Column(db.Integer, primary_key=True)

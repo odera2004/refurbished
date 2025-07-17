@@ -1,9 +1,12 @@
 from flask import Blueprint, request, jsonify
 from models import db, Listing
+from flask import request, jsonify, Blueprint
+from models import db, Listing
 import cloudinary.uploader
 import os
 
 listings_bp = Blueprint('listings_bp', __name__)
+
 
 # GET all listings or by vendor_id
 @listings_bp.route('/listings', methods=['GET'])
@@ -23,30 +26,41 @@ def get_listing(id):
     return jsonify(listing.to_dict())
 
 
+
 # CREATE listing with Cloudinary image upload
 @listings_bp.route('/listings', methods=['POST'])
 def create_listing():
     try:
         title = request.form.get('title')
         description = request.form.get('description')
-        price = int(request.form.get('price'))
+        try:
+           price = int(request.form.get('price', 0))
+        except (TypeError, ValueError):
+          return jsonify({"error": "Invalid price"}), 400
         condition = request.form.get('condition')
         category = request.form.get('category')
-        vendor_id = int(request.form.get('user_id'))
+        vendor_id = request.form.get('user_id')
         vendor_name = request.form.get('vendor_name')
         vendor_whatsapp = request.form.get('vendor_whatsapp')
-        image_file = request.files.get('image')
+        image = request.files.get('image')
+
+        # ✅ Validate required fields
+        if not all([title, description, price, condition, category, vendor_id, vendor_name, vendor_whatsapp]):
+            return jsonify({"error": "All fields are required"}), 400
+
+        # ✅ Convert values safely
+        price = int(price)
+        vendor_id = int(vendor_id)
 
         image_url = None
-        if image_file:
-            upload_result = cloudinary.uploader.upload(
-                image_file,
-                folder="product_images",  # optional Cloudinary folder
-                use_filename=True,
-                unique_filename=True,
-                resource_type="image"
-            )
-            image_url = upload_result.get("secure_url")
+        if image:
+           try:
+              upload_result = cloudinary.uploader.upload(image.stream)
+              image_url = upload_result['secure_url']
+
+           except Exception as e:
+            print("Cloudinary upload error:", e)
+            return jsonify({"error": "Image upload failed", "details": str(e)}), 500
 
         listing = Listing(
             title=title,
@@ -63,14 +77,15 @@ def create_listing():
         db.session.add(listing)
         db.session.commit()
 
-        return jsonify({ "message": "Listing created", "listing": listing.to_dict() }), 201
+        return jsonify({"message": "Listing created", "listing": listing.to_dict()}), 201
 
     except Exception as e:
         db.session.rollback()
         import traceback
         traceback.print_exc()
-        return jsonify({ "error": str(e) }), 500
+        return jsonify({"error": str(e)}), 500
 
+    
 
 # DELETE listing
 @listings_bp.route('/<int:id>', methods=['DELETE'])
