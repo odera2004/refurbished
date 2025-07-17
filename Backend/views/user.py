@@ -7,46 +7,38 @@ from werkzeug.security import generate_password_hash
 
 user_bp = Blueprint('user_bp', __name__)
 
-@user_bp.route('/register', methods=['POST'])
+@user_bp.route("/register", methods=["POST"])
 def register():
-    data = request.get_json()
+    try:
+        data = request.get_json()
+        username = data.get("username")
+        email = data.get("email")
+        password = data.get("password")
 
-    # Check if email already exists
-    if User.query.filter_by(email=data['email']).first():
-        return jsonify({"error": "Email already registered"}), 400
+        # Check if user exists
+        user_exists = User.query.filter((User.username == username) | (User.email == email)).first()
+        if user_exists:
+            return jsonify({"error": "Username or email already exists"}), 409
 
-    user = User(
-        full_name=data['full_name'],
-        email=data['email'],
-        password=generate_password_hash(data['password']),
-        phone_number=data['phone_number'],
-        role=data['role'],
-        campus=data['campus']
-    )
+        hashed_password = generate_password_hash(password)
+        new_user = User(username=username, email=email, password=hashed_password)
 
-    db.session.add(user)
-    db.session.commit()
-
-    # ✅ Create VendorProfile if role is 'vendor'
-    if user.role == 'vendor':
-        vendor_profile = VendorProfile(
-            user_id=user.id,
-            store_name=f"{user.full_name}'s Store",  # Optional default name
-            bio="",
-            status="Pending",
-            verified=False,
-            subscription_status="Free"
-        )
-        db.session.add(vendor_profile)
+        db.session.add(new_user)
         db.session.commit()
 
-    return jsonify({
-        "message": "User registered successfully",
-        "user": {
-            "id": user.id,
-            "role": user.role
-        }
-    }), 201
+        return jsonify({
+            "message": "User registered successfully",
+            "user": {
+                "id": new_user.id,
+                "username": new_user.username,
+                "email": new_user.email
+            }
+        }), 201
+
+    except Exception as e:
+        print("Registration error:", e)
+        return jsonify({"error": "Something went wrong"}), 500
+
 
 @user_bp.route('/', methods=['GET'])
 def get_all_users():
