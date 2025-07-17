@@ -9,7 +9,7 @@ export default function ProductList({ userId }) {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch(`https://refurbished-3.onrender.com/listings?vendor_id=${userId}`);
+      const response = await fetch(`https://refurbished-1.onrender.com/listings?vendor_id=${userId}`);
       const data = await response.json();
       if (response.ok) {
         setProducts(data);
@@ -24,7 +24,7 @@ export default function ProductList({ userId }) {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this product?")) return;
     try {
-      const res = await fetch(`https://refurbished-3.onrender.com/listings/${id}`, {
+      const res = await fetch(`https://refurbished-1.onrender.com/listings/${id}`, {
         method: 'DELETE'
       });
       if (res.ok) {

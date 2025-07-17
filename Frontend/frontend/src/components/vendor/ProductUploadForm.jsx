@@ -62,7 +62,7 @@ export default function ProductUploadForm({ userId, onUpload }) {
     console.log([...payload.entries()]);
 
     try {
-      const res = await fetch('https://refurbished-3.onrender.com/listings', {
+      const res = await fetch('https://refurbished-1.onrender.com/listings', {
         method: 'POST',
         body: payload,
       });

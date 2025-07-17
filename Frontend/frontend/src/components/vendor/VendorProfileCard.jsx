@@ -12,7 +12,7 @@ export default function VendorProfileCard({ userId }) {
 
   const fetchProfile = async () => {
     try {
-      const response = await fetch(`https://refurbished-3.onrender.com/vendor-profiles/${userId}`);
+      const response = await fetch(`https://refurbished-1.onrender.com/vendor-profiles/${userId}`);
       const data = await response.json();
       if (response.ok) {
         setProfile(data);
@@ -48,7 +48,7 @@ export default function VendorProfileCard({ userId }) {
         image_url = data.secure_url;
       }
 
-      const response = await fetch(`https://refurbished-3.onrender.com/vendor-profiles/${userId}`, {
+      const response = await fetch(`https://refurbished-1.onrender.com/vendor-profiles/${userId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ store_name: storeName, bio, image_url }),
@@ -73,7 +73,7 @@ export default function VendorProfileCard({ userId }) {
     if (!window.confirm("Are you sure you want to delete your vendor profile?")) return;
 
     try {
-      const response = await fetch(`https://refurbished-3.onrender.com/vendor-profiles/${userId}`, {
+      const response = await fetch(`https://refurbished-1.onrender.com/vendor-profiles/${userId}`, {
         method: 'DELETE',
       });
 
