@@ -11,33 +11,46 @@ user_bp = Blueprint('user_bp', __name__)
 def register():
     try:
         data = request.get_json()
-        username = data.get("username")
+        full_name = data.get("full_name")
         email = data.get("email")
         password = data.get("password")
+        phone_number = data.get("phone_number")
+        role = data.get("role")
+        campus = data.get("campus")
 
-        # Check if user exists
-        user_exists = User.query.filter((User.username == username) | (User.email == email)).first()
+        user_exists = User.query.filter((User.full_name == full_name) | (User.email == email)).first()
         if user_exists:
             return jsonify({"error": "Username or email already exists"}), 409
 
         hashed_password = generate_password_hash(password)
-        new_user = User(username=username, email=email, password=hashed_password)
+        new_user = User(
+            username=full_name,
+            full_name=full_name,
+            email=email,
+            password=hashed_password,
+            phone_number=phone_number,
+            role=role,
+            campus=campus
+        )
 
         db.session.add(new_user)
         db.session.commit()
 
         return jsonify({
             "message": "User registered successfully",
+            "user_id": new_user.id,
             "user": {
                 "id": new_user.id,
-                "username": new_user.username,
-                "email": new_user.email
+                "full_name": new_user.full_name,
+                "email": new_user.email,
+                "role": new_user.role
             }
         }), 201
 
     except Exception as e:
         print("Registration error:", e)
         return jsonify({"error": "Something went wrong"}), 500
+
 
 
 @user_bp.route('/', methods=['GET'])
