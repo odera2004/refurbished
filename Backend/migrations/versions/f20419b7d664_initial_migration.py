@@ -1,8 +1,8 @@
-"""Add is_google_account field to User model
+"""Initial migration
 
-Revision ID: 4092124c985f
+Revision ID: f20419b7d664
 Revises: 
-Create Date: 2025-07-15 14:48:07.630601
+Create Date: 2025-07-18 12:15:29.435598
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '4092124c985f'
+revision = 'f20419b7d664'
 down_revision = None
 branch_labels = None
 depends_on = None

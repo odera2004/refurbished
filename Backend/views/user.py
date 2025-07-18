@@ -24,7 +24,6 @@ def register():
 
         hashed_password = generate_password_hash(password)
         new_user = User(
-            username=full_name,
             full_name=full_name,
             email=email,
             password=hashed_password,
