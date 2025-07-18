@@ -34,10 +34,10 @@ export default function ListingsPage() {
             <div key={product.id} className="bg-white rounded-xl shadow-md p-4">
               {product.image_url && (
                 <img
-                  src={`http://localhost:5000/${product.image_url}`}
-                  alt={product.title}
-                  className="w-full h-48 object-cover rounded-lg mb-3"
-                />
+                src={product.image_url} // Remove the base URL prefix
+                alt={product.title}
+                className="w-full h-48 object-cover rounded-lg mb-3"
+              />
               )}
               <h2 className="text-xl font-semibold text-gray-800">{product.title}</h2>
               <p className="text-gray-500 text-sm mt-1">{product.description}</p>

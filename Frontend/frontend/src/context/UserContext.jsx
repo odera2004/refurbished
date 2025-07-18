@@ -57,18 +57,18 @@ export function UserProvider({ children }) {
   
       if (response.ok) {
         // ✅ Automatically create VendorProfile if role is vendor
-        // if (role === 'vendor') {
-        //   await fetch('https://refurbished-1.onrender.com/vendor-profiles', {
-        //     method: 'POST',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify({
-        //       user_id: data.user_id, // You must return `user_id` from /register
-        //       store_name: full_name + "'s Shop", // default store name
-        //       bio: '',
-        //       subscription_status: 'free'
-        //     }),
-        //   });
-        // }
+        if (role === 'vendor') {
+          await fetch('https://refurbished-1.onrender.com/vendor-profiles', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              user_id: data.user_id, // You must return `user_id` from /register
+              store_name: full_name + "'s Shop", // default store name
+              bio: '',
+              subscription_status: 'free'
+            }),
+          });
+        }
   
         return true;
       } else {
