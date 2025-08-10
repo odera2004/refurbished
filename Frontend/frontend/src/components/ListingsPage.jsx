@@ -7,7 +7,7 @@ export default function ListingsPage() {
 
   const fetchAllProducts = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/listings`);
+      const response = await fetch(`https://refurbished-1.onrender.com/listings`);
       const data = await response.json();
       if (response.ok) {
         setProducts(data);

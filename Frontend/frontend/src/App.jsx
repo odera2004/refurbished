@@ -6,6 +6,7 @@ import Equipments from './components/Equipments';
 import Banner from './components/Banner/Banner.jsx';
 import Banner2 from './components/Banner/Banner2.jsx';
 import Img1 from './assets/1.png';
+import HowItWorks from './components/Howitworks/work.jsx'
 import BgImage from './assets/bg.jpg';
 import TabComp from './components/Tab/TabComp.jsx';
 import Testimonials from './Testimonials/Testimonials.jsx';
@@ -15,7 +16,6 @@ import Login from './Pages/Login';
 import Register from './Pages/Register';
 import VendorDashboard from './Pages/VendorDashboard';
 
-import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const BannerData = {
@@ -43,6 +43,7 @@ function HomePage() {
       <Equipments />
       <Banner {...BannerData} />
       <TabComp />
+      <HowItWorks />
       <Testimonials />
       <Banner2 />
     </>

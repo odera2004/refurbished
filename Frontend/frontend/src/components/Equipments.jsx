@@ -38,7 +38,7 @@ const Equipments = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 
         gap-6 font-playfair">
             <div className='space-y-4 p-6'>
-                <h1 className='text-3xl md:text-4xl
+                <h1 className=' font-playwrite text-3xl md:text-4xl
                 font-bold'>What we offer for you</h1>
                 <p className='text-gray-500'>Affordable refurbished products from vendors
                 </p>
@@ -52,7 +52,7 @@ const Equipments = () => {
                 key={item.id}
                 
                 className='space-y-4 p-6 bg-[#fbfbfb] hover:bg-white
-                    rounded-xl hover:shadow-[0_0_22px_0_rgba(0,0,0,0.15)]'>
+                    rounded-xl hover:shadow-[0_0_22px_0_rgba(0,0,0,0.15)] font-playwrite'>
                     <div className='text-4xl'>{item.icon}</div>
                     <div className='text-2xl font-semiold'>{item.title}</div>
                     <div className='text-gray-500'>{item.desc}</div>

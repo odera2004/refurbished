@@ -3,9 +3,9 @@ import { motion } from 'framer-motion'
 import { Slideup } from '../../utility/animation'
 
 
-const Banner = ({ image, title, subtitle, link }) => {
+const Banner = ({ image, title, subtitle }) => {
   return (
-    <div className='container'>
+    <div className='container font-playwrite'>
       <div className="bg-[#f9f9f9] grid grid-cols-1 md:grid-cols-2 gap-6 py-14 items-center">
         
         {/* Banner Image Section */}

@@ -12,7 +12,7 @@ const Layout = () => {
   const isVendorPage = location.pathname.startsWith('/vendor');
 
   return ( 
-    <div className="layout-wrapper">
+    <div className="layout-wrapper overflow-x-hidden">
       {!isVendorPage && <Navbar />}
 
       

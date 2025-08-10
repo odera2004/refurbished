@@ -17,17 +17,10 @@ export const NavbarMenu = [
         title: "Home",
         link: "/",
     },
-
-    {
-        id: "2",
-        title: "Features",
-        link: "/",
-    },
-
     {
         id: "3",
         title: "How it works",
-        link: "/",
+        link: "/#how-it-works",
     },
 
     {

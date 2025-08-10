@@ -8,7 +8,9 @@ export default {
     extend: {
       fontFamily: {
         playfair: ["Playfair Display", "serif"],
+        playfair : ['Playfair', 'serif'],
         berkshire: ['"Berkshire Swash"', 'cursive'],
+        playwrite : ['Playwrite AU NSW', 'cursive']
         
       },
 
