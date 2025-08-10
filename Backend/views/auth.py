@@ -16,7 +16,7 @@ serializer = URLSafeTimedSerializer(os.getenv("SECRET_KEY", "fallback-secret-key
 
 # --- Login with Email/Password ---
 @auth_bp.route('/login', methods=['POST'])
-@cross_origin(origins=["https://sokolawanafunzi.vercel.app"], supports_credentials=True)
+@cross_origin(origins=["https://studentretailmarket.vercel.app"], supports_credentials=True)
 def login():
 
     data = request.get_json()
@@ -41,7 +41,7 @@ def login():
 
 
 @auth_bp.route('/google', methods=['POST', 'OPTIONS'])
-@cross_origin(origins="http://localhost:5173", supports_credentials=True)
+@cross_origin(origins=["http://localhost:5173", "https://studentretailmarket.vercel.app"], supports_credentials=True)
 def google_register():
     from models import User  # your User model
 

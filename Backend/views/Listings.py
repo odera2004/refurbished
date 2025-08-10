@@ -88,7 +88,7 @@ def create_listing():
     
 
 # DELETE listing
-@listings_bp.route('/<int:id>', methods=['DELETE'])
+@listings_bp.route('/Listings', methods=['DELETE'])
 def delete_listing(id):
     listing = Listing.query.get(id)
     if not listing:
