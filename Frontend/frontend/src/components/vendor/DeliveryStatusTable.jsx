@@ -6,7 +6,7 @@ export default function DeliveryStatusTable({ vendorId }) {
 
   const fetchDeliveries = async () => {
     try {
-      const res = await fetch(`https://refurbished-1.onrender.com/deliveries?vendor_id=${vendorId}`);
+      const res = await fetch(`https://refurbished.onrender.com/deliveries?vendor_id=${vendorId}`);
       const data = await res.json();
       if (res.ok) {
         setDeliveries(data);
