@@ -15,7 +15,7 @@ export function UserProvider({ children }) {
 
   const login = async (email, password) => {
     try {
-      const response = await fetch('https://refurbished.onrender.com/login', {
+      const response = await fetch('https://refurbished-2.onrender.com/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: "include",
@@ -38,9 +38,10 @@ export function UserProvider({ children }) {
   };
   
 
+
   const register = async (full_name, email, phone_number, password, role, campus) => {
     try {
-      const response = await fetch('https://refurbished.onrender.com/register', {
+      const response = await fetch('https://refurbished-2.onrender.com/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -56,14 +57,17 @@ export function UserProvider({ children }) {
       const data = await response.json();
   
       if (response.ok) {
+        // ✅ Success toast
+        toast.success('Registration successful!');
+  
         // ✅ Automatically create VendorProfile if role is vendor
         if (role === 'vendor') {
-          await fetch('https://refurbished.onrender.com/vendor-profiles', {
+          await fetch('https://refurbished-2.onrender.com/vendor-profiles', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               user_id: data.user_id, // You must return `user_id` from /register
-              store_name: full_name + "'s Shop", // default store name
+              store_name: `${full_name}'s Shop`,
               bio: '',
               subscription_status: 'free'
             }),
@@ -88,7 +92,7 @@ export function UserProvider({ children }) {
   
     if (token) {
       try {
-        await fetch('https://refurbished.onrender.com/logout', {
+        await fetch('https://refurbished-2.onrender.com/logout', {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',

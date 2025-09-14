@@ -5,7 +5,7 @@ export default function ProductGrid({ category }) {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    let url = 'http://localhost:5000/listings';
+    let url = 'https://refurbished-2.onrender.com/listings';
     if (category) url += `?category=${encodeURIComponent(category)}`;
 
     fetch(url)
@@ -24,7 +24,7 @@ export default function ProductGrid({ category }) {
             <div className="card h-100 shadow-sm border-0 rounded-4">
               {product.image_url && (
                 <img
-                  src={`http://localhost:5000/${product.image_url}`}
+                  src={`https://refurbished-2.onrender.com/${product.image_url}`}
                   className="card-img-top rounded-top-4"
                   alt={product.title}
                   style={{ objectFit: 'cover', height: '200px' }}

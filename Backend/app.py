@@ -18,7 +18,7 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max upload
 # ✅ Enable CORS for local and deployed frontends
 CORS(app, supports_credentials=True, origins=[
     "http://localhost:5173", 
-    "https://refurbished-xi.vercel.app"  # ✅ Your deployed frontend
+    "https://refurbished-self.vercel.app"  # ✅ Your deployed frontend
 ])
 
 # Load environment-based config
