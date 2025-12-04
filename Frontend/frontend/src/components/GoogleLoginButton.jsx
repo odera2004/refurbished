@@ -8,7 +8,7 @@ export default function GoogleLoginButton() {
 
   const handleSuccess = async (credentialResponse) => {
     try {
-      const res = await fetch('https://refurbished.onrender.com/google', {
+      const res = await fetch('https://refurbished-4.onrender.com/google', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include', // ✅ Include credentials (needed for cookies/tokens)
