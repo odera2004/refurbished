@@ -24,7 +24,7 @@ export default function ProductGrid({ category }) {
             <div className="card h-100 shadow-sm border-0 rounded-4">
               {product.image_url && (
                 <img
-                  src={`https://refurbished-2.onrender.com/${product.image_url}`}
+                  src={`https://refurbished-4.onrender.com/${product.image_url}`}
                   className="card-img-top rounded-top-4"
                   alt={product.title}
                   style={{ objectFit: 'cover', height: '200px' }}
