@@ -12,7 +12,6 @@ pyjwt = "*"
 bcrypt = "*"
 flask-cors = "*"
 psycopg2-binary = "*"
-gunicorn = "*"
 boto3 = "*"
 flask-jwt-extended = "*"
 google-auth = "*"
@@ -20,6 +19,8 @@ google-auth-oauthlib = "*"
 google-auth-httplib2 = "*"
 cloudinary = "*"
 python-dotenv = "*"
+psycopg2 = "*"
+gunicorn = "*"
 
 [dev-packages]
 
