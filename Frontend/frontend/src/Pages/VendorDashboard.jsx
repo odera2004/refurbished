@@ -19,7 +19,7 @@ export default function VendorDashboard() {
 
   const fetchVendorProfile = async () => {
     try {
-      const res = await fetch(`https://refurbished-2.onrender.com/vendor-profiles/${user.id}`);
+      const res = await fetch(`https://refurbished-4.onrender.com/vendor-profiles/${user.id}`);
       if (res.status === 404) {
         setProfile(null);
       } else {
