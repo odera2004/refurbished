@@ -58,7 +58,7 @@ export default function ListingsPage() {
               )}
               <h2 className="text-xl font-semibold text-gray-800">{product.title}</h2>
               <p className="text-gray-500 text-sm mt-1">{product.description}</p>
-              <p className="text-primary font-bold mt-2">₦ {product.price}</p>
+              <p className="text-primary font-bold mt-2">ksh {product.price}</p>
               <p className="text-sm text-gray-600">Condition: {product.condition}</p>
               <p className="text-sm text-gray-600">Category: {product.category}</p>
 
@@ -68,7 +68,7 @@ export default function ListingsPage() {
 
               {product.vendor_whatsapp && (
                 <a
-                  href={`https://wa.me/${product.vendor_whatsapp}?text=Hi%20I'm%20interested%20in%20your%20product:%20${product.title}`}
+                  href={`https://web.whatsapp.com//${product.vendor_whatsapp}?text=Hi%20I'm%20interested%20in%20your%20product:%20${product.title}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block mt-2 text-sm text-green-600 hover:underline"
